@@ -5,7 +5,7 @@ import TodoDisplay from '../components/todoDisplay';
 import {useTodos} from '../hooks/useTodoState';
 
 export default function TodoList() {
-  const {todos, addTodo, deleteTodo, toggleTodo} = useTodos();
+  const {todos, addTodo, deleteTodo, toggleTodo, editTodo} = useTodos();
 
   return (
     <View style={styles.container}>
@@ -14,6 +14,7 @@ export default function TodoList() {
           todos={todos}
           deleteTodo={deleteTodo}
           toggleTodo={toggleTodo}
+          editTodo={editTodo}
           testID="todoDisplay"
         />
       </View>

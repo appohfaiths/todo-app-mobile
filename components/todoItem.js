@@ -1,15 +1,28 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
   Pressable,
   StyleSheet,
   TouchableOpacity,
+  TextInput,
 } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
-export default function TodoItem({todo, deleteTodo, toggleTodo}) {
+export default function TodoItem({todo, deleteTodo, toggleTodo, editTodo}) {
   const {id, text, completed} = todo;
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedText, onChangeTodoText] = useState(text);
+
+  const handleSaveChanges = () => {
+    if (editedText.trim() !== '') {
+      // Update the todo with the edited text
+      // todo.text = editedText;
+      editTodo(id, editedText);
+    }
+    setIsEditing(false);
+  };
+
   const deleteIcon = (
     <FontAwesome5 name="trash-alt" size={20} color="#3B82F6" />
   );
@@ -20,37 +33,51 @@ export default function TodoItem({todo, deleteTodo, toggleTodo}) {
   const editIcon = <FontAwesome5 name={'pen'} size={20} color="#3B82F6" />;
 
   return (
-    <View testID={`todoItem-${todo.id}`} style={styles.container}>
-      <TouchableOpacity testID="statusButton" onPress={() => toggleTodo(id)}>
-        <View style={styles.actionIcon}>
-          {completed ? completedIcon : activeIcon}
+    <>
+      <View testID={`todoItem-${todo.id}`} style={styles.container}>
+        <TouchableOpacity testID="statusButton" onPress={() => toggleTodo(id)}>
+          <View style={styles.actionIcon}>
+            {completed ? completedIcon : activeIcon}
+          </View>
+        </TouchableOpacity>
+        <View style={styles.innerContainer}>
+          {isEditing ? (
+            <TextInput
+              style={styles.editTodoInput}
+              value={editedText}
+              onChangeText={onChangeTodoText}
+              autoFocus
+              keyboardType={'default'}
+              testID="editTodoInput"
+              onBlur={handleSaveChanges}
+            />
+          ) : (
+            <Text style={completed ? styles.completedTodDo : styles.todoText}>
+              {text}
+            </Text>
+          )}
+          {completed ? (
+            <View>
+              <Text style={styles.statusText}>completed</Text>
+            </View>
+          ) : (
+            <View>
+              <Text style={styles.statusText}>active</Text>
+            </View>
+          )}
         </View>
-      </TouchableOpacity>
-      <View style={styles.innerContainer}>
-        <Text style={completed ? styles.completedTodDo : styles.todoText}>
-          {text}
-        </Text>
-        {completed ? (
-          <View>
-            <Text style={styles.statusText}>completed</Text>
-          </View>
-        ) : (
-          <View>
-            <Text style={styles.statusText}>active</Text>
-          </View>
-        )}
+        <Pressable onPress={() => setIsEditing(!isEditing)}>
+          <View style={styles.actionIcon}>{editIcon}</View>
+        </Pressable>
+        <Pressable
+          testID="deleteButton"
+          onPress={() => {
+            deleteTodo(id);
+          }}>
+          <View style={styles.actionIcon}>{deleteIcon}</View>
+        </Pressable>
       </View>
-      <Pressable>
-        <View style={styles.actionIcon}>{editIcon}</View>
-      </Pressable>
-      <Pressable
-        testID="deleteButton"
-        onPress={() => {
-          deleteTodo(id);
-        }}>
-        <View style={styles.actionIcon}>{deleteIcon}</View>
-      </Pressable>
-    </View>
+    </>
   );
 }
 
@@ -92,5 +119,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginLeft: 5,
     borderRadius: 3,
+  },
+  editTodoInput: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    fontSize: 16,
+    borderColor: '#edefee',
+    backgroundColor: 'white',
+    color: 'black',
+    width: '97%',
+    borderRadius: 25,
   },
 });
