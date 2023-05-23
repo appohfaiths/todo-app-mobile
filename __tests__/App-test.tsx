@@ -6,7 +6,7 @@ import 'react-native';
 import React from 'react';
 import App from '../App';
 import AsyncStorage from '@react-native-async-storage/async-storage/jest/async-storage-mock';
-import {render, screen, waitFor} from '@testing-library/react-native';
+import {render, waitFor} from '@testing-library/react-native';
 // Note: test renderer must be required after react-native.
 
 it('checks if Async Storage is used', async () => {
@@ -19,5 +19,4 @@ it('renders correctly', async () => {
   await waitFor(() => {
     render(<App />);
   });
-  screen.debug();
 });

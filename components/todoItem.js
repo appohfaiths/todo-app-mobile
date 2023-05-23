@@ -20,7 +20,7 @@ export default function TodoItem({todo, deleteTodo, toggleTodo}) {
   const editIcon = <FontAwesome5 name={'pen'} size={20} color="#3B82F6" />;
 
   return (
-    <View testID="todoItem" style={styles.container}>
+    <View testID={`todoItem-${todo.id}`} style={styles.container}>
       <TouchableOpacity testID="statusButton" onPress={() => toggleTodo(id)}>
         <View style={styles.actionIcon}>
           {completed ? completedIcon : activeIcon}
