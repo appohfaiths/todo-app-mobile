@@ -5,23 +5,13 @@ import {
   Pressable,
   StyleSheet,
   TouchableOpacity,
-  TextInput,
 } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import EditTodo from './editTodo';
 
 export default function TodoItem({todo, deleteTodo, toggleTodo, editTodo}) {
   const {id, text, completed} = todo;
   const [isEditing, setIsEditing] = useState(false);
-  const [editedText, onChangeTodoText] = useState(text);
-
-  const handleSaveChanges = () => {
-    if (editedText.trim() !== '') {
-      // Update the todo with the edited text
-      // todo.text = editedText;
-      editTodo(id, editedText);
-    }
-    setIsEditing(false);
-  };
 
   const deleteIcon = (
     <FontAwesome5 name="trash-alt" size={20} color="#3B82F6" />
@@ -42,14 +32,11 @@ export default function TodoItem({todo, deleteTodo, toggleTodo, editTodo}) {
         </TouchableOpacity>
         <View style={styles.innerContainer}>
           {isEditing ? (
-            <TextInput
-              style={styles.editTodoInput}
-              value={editedText}
-              onChangeText={onChangeTodoText}
-              autoFocus
-              keyboardType={'default'}
-              testID="editTodoInput"
-              onBlur={handleSaveChanges}
+            <EditTodo
+              id={id}
+              text={text}
+              setIsEditing={setIsEditing}
+              editTodo={editTodo}
             />
           ) : (
             <Text style={completed ? styles.completedTodDo : styles.todoText}>
@@ -130,6 +117,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     color: 'black',
     width: '97%',
-    borderRadius: 25,
+    borderRadius: 10,
   },
 });

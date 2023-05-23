@@ -13,10 +13,8 @@ export default function AddTodo({addTodo}) {
 
   const addNewTodo = () => {
     if (todoText === '') {
-      Alert.alert('Error', 'Please add some text to create a todo ');
     } else {
       addTodo(todoText);
-      // Alert.alert('Success', 'You added a new todo');
       onChangeTodoText('');
     }
   };
@@ -34,6 +32,7 @@ export default function AddTodo({addTodo}) {
           onChangeText={onChangeTodoText}
           placeholder={'add a new todo'}
           keyboardType={'default'}
+          onBlur={addNewTodo}
           testID="todoInput"
         />
       </View>

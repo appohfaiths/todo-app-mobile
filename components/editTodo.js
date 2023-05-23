@@ -1,8 +1,18 @@
 import React, {useState} from 'react';
-import {View, TextInput, StyleSheet} from 'react-native';
+import {View, TextInput, StyleSheet, Alert} from 'react-native';
 
-export default function EditTodo({editTodo, id, text, toggleEditForm}) {
+export default function EditTodo({editTodo, id, text, setIsEditing}) {
   const [editedText, onChangeTodoText] = useState(text);
+
+  const handleSaveChanges = () => {
+    if (editedText.trim() !== '') {
+      editTodo(id, editedText);
+    } else {
+      Alert.alert('Error', 'Todo cannot be empty');
+      onChangeTodoText(text);
+    }
+    setIsEditing(false);
+  };
 
   return (
     <View style={styles.inputContainer}>
@@ -13,6 +23,7 @@ export default function EditTodo({editTodo, id, text, toggleEditForm}) {
         autoFocus
         keyboardType={'default'}
         testID="editTodoInput"
+        onBlur={handleSaveChanges}
       />
     </View>
   );
@@ -23,15 +34,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   editTodoInput: {
-    height: 40,
+    height: 44,
     margin: 12,
-    borderWidth: 1,
+    borderWidth: 2,
     padding: 10,
     fontSize: 16,
     borderColor: '#edefee',
     backgroundColor: 'white',
     color: 'black',
-    width: '97%',
-    borderRadius: 25,
+    width: 235,
+    borderRadius: 10,
   },
 });
