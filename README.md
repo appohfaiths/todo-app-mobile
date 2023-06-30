@@ -32,7 +32,7 @@ This is a simple Todo app built with React Native CLI. It allows you to manage y
 
    ```
 
-   for iOS, cd ios
+   for iOS, cd ios from root folder
 
    ```bash
    pod install
@@ -51,11 +51,11 @@ This is a simple Todo app built with React Native CLI. It allows you to manage y
 2. Run the app on a connected emulator or device:
 
    ```bash
-   npm run-android
+   npm run android
    ```
 
    ```bash
-   npm run-ios
+   npm run ios
 
    ```
 
