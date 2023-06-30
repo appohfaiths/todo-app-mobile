@@ -32,23 +32,30 @@ This is a simple Todo app built with React Native CLI. It allows you to manage y
 
    ```
 
+   for iOS, cd ios
+
+   ```bash
+   pod install
+
+   ```
+
 ## Usage
 
 1. Start the app
 
    ```bash
-   npx react-native start
+   npm start
 
    ```
 
 2. Run the app on a connected emulator or device:
 
    ```bash
-   npx react-native run-android
+   npm run-android
    ```
 
    ```bash
-   npx react-native run-ios
+   npm run-ios
 
    ```
 
